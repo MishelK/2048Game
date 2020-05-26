@@ -6,8 +6,9 @@ public class GameBoard {
     private Tile[][] board;
     int width;
     int height;
-    Random rand = new Random();
     int activeTileCount;
+    int score;
+    Random rand = new Random();
     boolean MergedFlag = false;
 
 
@@ -15,6 +16,8 @@ public class GameBoard {
         width=x;
         height=y;
         board = new Tile[x][y];
+        activeTileCount = 0;
+        score = 0;
     }
 
     public int getWidth() {
@@ -52,6 +55,7 @@ public class GameBoard {
                 board[fromx][fromy] = null;
                 totile.value*=2;
                 activeTileCount--;
+                score += fromtile.value;
                 return true;
             }
         }

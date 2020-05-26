@@ -101,6 +101,7 @@ public class GameView extends View {
                 public void onSwipeTop() {
                     gameBoard.up();
                     if(!gameBoard.MergedFlag && gameBoard.activeTileCount == gameBoard.height*gameBoard.width) gameOver();
+                    updateScore();
                     gameBoard.addRandom();
                     invalidate();
 
@@ -108,6 +109,7 @@ public class GameView extends View {
                 public void onSwipeRight() {
                     gameBoard.right();
                     if(!gameBoard.MergedFlag && gameBoard.activeTileCount == gameBoard.height*gameBoard.width) gameOver();
+                    updateScore();
                     gameBoard.addRandom();
                     invalidate();
 
@@ -115,6 +117,7 @@ public class GameView extends View {
                 public void onSwipeLeft() {
                     gameBoard.left();
                     if(!gameBoard.MergedFlag && gameBoard.activeTileCount == gameBoard.height*gameBoard.width) gameOver();
+                    updateScore();
                     gameBoard.addRandom();
                     invalidate();
 
@@ -122,6 +125,7 @@ public class GameView extends View {
                 public void onSwipeBottom() {
                     gameBoard.down();
                     if(!gameBoard.MergedFlag && gameBoard.activeTileCount == gameBoard.height*gameBoard.width) gameOver();
+                    updateScore();
                     gameBoard.addRandom();
                     invalidate();
 
@@ -151,12 +155,20 @@ public class GameView extends View {
     }
 
 
-    public void gameOver(){ //Its implementation is currently just to test if its working, need to add a gameover dialog and make the game stop.
+    public void gameOver(){ //implementation is currently just to test if its working, need to add a gameover dialog and make the game stop.
 
         Toast.makeText(context, "gameOver", Toast.LENGTH_SHORT).show();
         ViewGroup parent = (ViewGroup) GameView.this.getParent();
-        TextView textView = parent.findViewById(R.id.GameOverTv);
-        textView.setText("Game Over");
+        TextView GameOverTv = parent.findViewById(R.id.GameOverTv);
+        GameOverTv.setText("Game Over");
+
+    }
+
+    public void updateScore(){
+
+        ViewGroup parent = (ViewGroup) GameView.this.getParent();
+        TextView ScoreTv = parent.findViewById(R.id.ScoreTv);
+        ScoreTv.setText(Integer.toString(gameBoard.score));
 
 
     }
