@@ -8,7 +8,12 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -20,21 +25,25 @@ public class GameView extends View {
     private Drawable[] mCellRectangle = new Drawable[20];
     GameBoard gameBoard = new GameBoard(4,4);
     Rect textBounds = new Rect();
+    Context context;
 
 
     public GameView(Context context) {
         super(context);
         init();
+        this.context = context;
     }
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
+        this.context = context;
     }
 
     public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
+        this.context = context;
     }
 
     @Override
@@ -91,29 +100,32 @@ public class GameView extends View {
             this.setOnTouchListener(new OnSwipeTouchListener(this.getContext()) {
                 public void onSwipeTop() {
                     gameBoard.up();
+                    if(!gameBoard.MergedFlag && gameBoard.activeTileCount == gameBoard.height*gameBoard.width) gameOver();
                     gameBoard.addRandom();
                     invalidate();
+
                 }
                 public void onSwipeRight() {
                     gameBoard.right();
+                    if(!gameBoard.MergedFlag && gameBoard.activeTileCount == gameBoard.height*gameBoard.width) gameOver();
                     gameBoard.addRandom();
                     invalidate();
 
                 }
                 public void onSwipeLeft() {
                     gameBoard.left();
+                    if(!gameBoard.MergedFlag && gameBoard.activeTileCount == gameBoard.height*gameBoard.width) gameOver();
                     gameBoard.addRandom();
                     invalidate();
 
                 }
                 public void onSwipeBottom() {
                     gameBoard.down();
+                    if(!gameBoard.MergedFlag && gameBoard.activeTileCount == gameBoard.height*gameBoard.width) gameOver();
                     gameBoard.addRandom();
                     invalidate();
+
                 }
-
-
-
 
             });
 
@@ -138,6 +150,16 @@ public class GameView extends View {
         return dp * getContext().getResources().getDisplayMetrics().density;
     }
 
+
+    public void gameOver(){ //Its implementation is currently just to test if its working, need to add a gameover dialog and make the game stop.
+
+        Toast.makeText(context, "gameOver", Toast.LENGTH_SHORT).show();
+        ViewGroup parent = (ViewGroup) GameView.this.getParent();
+        TextView textView = parent.findViewById(R.id.GameOverTv);
+        textView.setText("Game Over");
+
+
+    }
 
 
 }

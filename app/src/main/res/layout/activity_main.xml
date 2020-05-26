@@ -6,6 +6,17 @@
     <com.example.a2048game.GameView
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:id="@+id/GameView">
+    </com.example.a2048game.GameView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/GameOverTv"
+        android:layout_below="@id/GameView"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:textSize="25sp"/>
 
 </RelativeLayout>

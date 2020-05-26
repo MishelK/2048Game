@@ -7,6 +7,8 @@ public class GameBoard {
     int width;
     int height;
     Random rand = new Random();
+    int activeTileCount;
+    boolean MergedFlag = false;
 
 
     public GameBoard(int x, int y) {
@@ -30,6 +32,8 @@ public class GameBoard {
         if(tile == null)
         {
             board[x][y] = new Tile(value,x,y);
+            activeTileCount++;
+
         }else{
             tile.value = value;
         }
@@ -47,6 +51,7 @@ public class GameBoard {
             {
                 board[fromx][fromy] = null;
                 totile.value*=2;
+                activeTileCount--;
                 return true;
             }
         }
@@ -95,6 +100,8 @@ public class GameBoard {
     }
 
     void up(){
+        MergedFlag = false;
+
         for(int x=0;x<width;x++){
             for (int y=1;y<height;y++){
                 boolean moved = moveTile(x,y,x,y-1);
@@ -104,6 +111,8 @@ public class GameBoard {
             }
             for (int y=1;y<height;y++){
                 boolean merged = mergeTile(x,y,x,y-1);
+
+                if(merged) MergedFlag = true;
             }
             for (int y=1;y<height;y++){
                 boolean moved = moveTile(x,y,x,y-1);
@@ -114,6 +123,8 @@ public class GameBoard {
         }
     }
     void down(){
+        MergedFlag = false;
+
         for(int x=0;x<width;x++){
             for (int y=height-1;y>0;y--){
                 boolean moved = moveTile(x,y-1,x,y);
@@ -123,6 +134,8 @@ public class GameBoard {
             }
             for (int y=height-1;y>0;y--){
                 boolean merged = mergeTile(x,y-1,x,y);
+
+                if(merged) MergedFlag = true;
             }
             for (int y=height-1;y>0;y--){
                 boolean moved = moveTile(x,y-1,x,y);
@@ -133,6 +146,8 @@ public class GameBoard {
         }
     }
     void left() {
+        MergedFlag = false;
+
         for(int y=0;y<height;y++){
             for (int x=1;x<width;x++){
                 boolean moved = moveTile(x,y,x-1,y);
@@ -142,6 +157,8 @@ public class GameBoard {
             }
             for (int x=1;x<width;x++){
                 boolean merged = mergeTile(x,y,x-1,y);
+
+                if(merged) MergedFlag = true;
             }
             for (int x=1;x<width;x++){
                 boolean moved = moveTile(x,y,x-1,y);
@@ -152,6 +169,8 @@ public class GameBoard {
         }
     }
     void right(){
+        MergedFlag = false;
+
         for(int y=0;y<height;y++){
             for (int x=width-1;x>0;x--){
                 boolean moved = moveTile(x-1,y,x,y);
@@ -161,6 +180,8 @@ public class GameBoard {
             }
             for (int x=width-1;x>0;x--){
                 boolean merged = mergeTile(x-1,y,x,y);
+
+                if(merged) MergedFlag = true;
             }
             for (int x=width-1;x>0;x--){
                 boolean moved = moveTile(x-1,y,x,y);
